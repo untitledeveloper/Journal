@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Journal</title>
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar">
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+
+        <div class="card_layout" id="card_layout">
+
+            <div class="card custom_card" id="add_note">
+
+                <div class="add_content unselect" id="add_content">
+                    <p>+</p>
+                </div>
+
+                <div class="entry_content" id="entry_content">
+                    <button class='button' onclick='saveData()' id='entry_save'>Save</button>
+                    <input class='entry_title' type='text' placeholder='Title' id='entry_title'>
+                    <textarea class='entry_journal' name='entry_journal' placeholder='Begin entry...' cols='50' rows='20' id='entry_journal'></textarea>
+                </div>
+        
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer></footer>
+
+    <script src="./assets/js/script.js"></script>
+
+</body>
+</html>

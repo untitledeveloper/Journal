@@ -1,0 +1,23 @@
+{
+  "name": "journal",
+  "version": "1.0.0",
+  "description": "A note taking web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/untitledeveloper/journal.git"
+  },
+  "author": "Teoman Aydogan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/untitledeveloper/journal/issues"
+  },
+  "homepage": "https://github.com/untitledeveloper/journal#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  }
+}
