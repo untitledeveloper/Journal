@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <title>Journal</title>
 </head>
 <body>
@@ -13,7 +14,7 @@
         <nav class="navbar">
             <ul>
                 <li>
-                    <a href="/">Home</a>
+                    <a href="/"><h1>Journal</h1></a>
                 </li>
             </ul>
         </nav>
@@ -26,13 +27,24 @@
             <div class="card custom_card" id="add_note">
 
                 <div class="add_content unselect" id="add_content">
-                    <p>+</p>
+                    <p style="font-size: 72px;">+</p>
                 </div>
 
                 <div class="entry_content" id="entry_content">
-                    <button class='button' onclick='saveData()' id='entry_save'>Save</button>
-                    <input class='entry_title' type='text' placeholder='Title' id='entry_title'>
-                    <textarea class='entry_journal' name='entry_journal' placeholder='Begin entry...' cols='50' rows='20' id='entry_journal'></textarea>
+
+                    <div class='journal_header'>
+                        <button class='button' onclick='saveData()'><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                            width="24" height="24"
+                            viewBox="0 0 172 172"
+                            style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path d="M121.83333,21.5h-86c-7.955,0 -14.33333,6.45 -14.33333,14.33333v100.33333c0,7.88333 6.37833,14.33333 14.33333,14.33333h100.33333c7.88333,0 14.33333,-6.45 14.33333,-14.33333v-86zM86,136.16667c-11.89667,0 -21.5,-9.60333 -21.5,-21.5c0,-11.89667 9.60333,-21.5 21.5,-21.5c11.89667,0 21.5,9.60333 21.5,21.5c0,11.89667 -9.60333,21.5 -21.5,21.5zM107.5,64.5h-71.66667v-28.66667h71.66667z"></path></g></g></svg></button>
+                    </div>
+
+                    <div class="journal_body">
+                        <input class='entry_title' type='text' placeholder='Title' id='entry_title'>
+                        <textarea class='entry_journal' name='entry_journal' placeholder='Begin entry...' cols='50' rows='20' id='entry_journal'></textarea>
+                    </div>
+                    
+                    
                 </div>
         
             </div>
