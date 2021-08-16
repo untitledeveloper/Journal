@@ -21,6 +21,13 @@ function saveData() {
     console.log("Title: ", entry_title.value)
     console.log("Entry: ", entry_journal.value)
 
+    const newEntry = {
+        title : entry_title.value.trim(),
+        text : entry_journal.value.trim(),
+    }
+
+    saveEntry(newEntry)
+
     div.style.display = "none"
     add_content.style.display = "block"
 
@@ -30,23 +37,32 @@ function saveData() {
     return recieveData()
 }
 
-const getData = async () => {
-    const result = await fetch('/api/db', {
-      method: 'GET',
-    });
-    const json = await result.json();
-    return json;
-  };
+function getEntries() {
+    return $.ajax({
+        url: "/api/notes",
+        method: "GET"
+      });
+}
 
-const listData = (item) => {
-    console.log(item)
+function listData(item) {
+    for (var i = 0; i < item.length; i++) {
+        removeCards(item[i])
+        renderCards(item[i])
+    }
+}
+
+function removeCards(item) {
+    $('#'+item['id']).remove();
+}
+
+function renderCards(item) {
     var entry = document.createElement("div");
     entry.className = "card journal_card";
     entry.id = item['id'];
     entry.innerHTML = `
     <div class='journal_header'>    
-        <button onclick='editData()' id='edit_button'>Edit</button>
-        <button onclick='deleteData()' id='delete_button'>Delete</button>
+        <button onclick='editData(${item['id']})' id='edit_button'>Edit</button>
+        <button onclick='deleteEntry(${item['id']})' id='delete_button'>Delete</button>
     </div>
     `
     entry.innerHTML += `
@@ -58,19 +74,28 @@ const listData = (item) => {
     card_layout.appendChild(entry);
 }
 
-async function recieveData() {
-    console.log("Getting data")
-    const response = await getData();
-    return response.forEach((item) => listData(item));
+function recieveData() {
+    return getEntries().then(function(data) {
+        listData(data);
+      });
 }
 
-function editData() {
-    console.log("edit data")
+function saveEntry(entry) {
+    return $.ajax({
+        url: "/api/notes",
+        data: entry,
+        method: "POST"
+      });
 }
 
-function deleteData() {
-    console.log("delete data")
+function deleteEntry(id) {
+    $('#'+id).remove();
+    return $.ajax({
+        url: "api/notes/" + id,
+        method: "DELETE"
+      });
 }
+
 
 add_content.onclick = function() {
     console.log('Clicked add note')

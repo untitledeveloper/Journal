@@ -1,53 +1,52 @@
 const express = require('express');
+const fs = require("fs");
 const path = require('path');
 const db = require('./db/db.json');
+const uid = require('./helpers/uid');
 
 const app = express();
 const PORT = 3001;
 
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.get('/', (req, res) => res.send());
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/index.html"));
+});
 
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/index.html'))
-);
+app.get("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "/public/notes.html"));
+});
 
-app.get('/notes', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public/notes.html'))
-);
+app.get("/api/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "/db/db.json"));
+});
 
-app.get('/api/db', (req, res) => 
-  res.json(db)
-);
+app.post("/api/notes", (req, res) => {
+    let newNote = req.body;
+    let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    let notelength = (noteList.length).toString();
 
-// app.post('/api/reviews', (req, res) => {
-//   // Log that a POST request was received
-//   console.info(`${req.method} request received to add a review`);
+    newNote.id = notelength;
 
-//   // Destructuring assignment for the items in req.body
-//   const { title, text } = req.body;
+    noteList.push(newNote);
 
-//   // If all the required properties are present
-//   if (product && review && username) {
-//     // Variable for the object we will save
-//     const newEntry = {
-//       id: uid(),
-//       title,
-//       text,
-//     };
+    fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+    res.json(noteList);
+})
 
-//     const response = {
-//       status: 'success',
-//       body: newEntry,
-//     };
+app.delete("/api/notes/:id", (req, res) => {
+    let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    let noteId = (req.params.id).toString();
 
-//     console.log(response);
-//     res.json(response);
-//   } else {
-//     res.json('Error in adding entry');
-//   }
-// });
+    noteList = noteList.filter(selected =>{
+        return selected.id != noteId;
+    })
+
+    fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+    res.json(noteList);
+});
 
 app.listen(PORT, () =>
   console.log(`Example app listening at http://localhost:${PORT}`)
