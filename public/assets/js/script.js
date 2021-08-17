@@ -86,7 +86,7 @@ function renderCards(item) {
     
     <div class='journal_body' style='display: none;' id='edit_body_${item['id']}'>
         <input class='entry_title' type='text' value='${item['title']}' id='title_${item['id']}'>
-        <textarea class='entry_journal' name='text_${item['id']}' cols='50' rows='20' id='entry_${item['id']}'>${item['text']}</textarea> 
+        <textarea class='entry_journal' name='text_${item['id']}' cols='50' rows='20' id='text_${item['id']}'>${item['text']}</textarea> 
     </div>
     `
     card_layout.appendChild(entry);
@@ -101,6 +101,14 @@ function recieveData() {
 function saveEntry(entry) {
     return $.ajax({
         url: "/api/notes",
+        data: entry,
+        method: "POST"
+      });
+}
+
+function editEntry(id, entry) {
+    return $.ajax({
+        url: "api/notes/" + id,
         data: entry,
         method: "POST"
       });
@@ -122,15 +130,20 @@ function editData(id) {
 }
 
 function reSave(id) {
-    var title = getId('title_'+id);
-    var text = getId('text_'+id);
+    var title = getId('title_'+id).value;
+    var text = getId('text_'+id).value;
 
-    console.log(title, text);
+    console.log("edit title: ", title);
+    console.log("edit text: ", text);
 
-    getId('header_'+id).style.display = "block";
-    getId('body_'+id).style.display = "block";
-    getId('edit_body_'+id).style.display = "none";
-    getId('edit_header_'+id).style.display = "none";
+    const entry = {
+        title: title.trim(),
+        text: text.trim(),
+        id: id
+    }
+
+    editEntry(id, entry)
+    recieveData()
 }
 
 

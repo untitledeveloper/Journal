@@ -48,6 +48,23 @@ app.delete("/api/notes/:id", (req, res) => {
     res.json(noteList);
 });
 
+app.post("/api/notes/:id", (req, res) => {
+    let newNote = req.body;
+    let noteList = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
+    let noteId = (req.params.id).toString();
+
+    noteList = noteList.filter(selected =>{
+        return selected.id != noteId;
+    })
+
+    newNote.id = newNote.id;
+
+    noteList.push(newNote);
+
+    fs.writeFileSync("./db/db.json", JSON.stringify(noteList));
+    res.json(noteList);
+});
+
 app.listen(PORT, () =>
   console.log(`Example app listening at http://localhost:${PORT}`)
 );
